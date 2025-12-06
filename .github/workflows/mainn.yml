@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 */6 * * *'  # auto restart every 6 hours
+    - cron: '0 */5 * * *'  # auto restart every 6 hours
 
 jobs:
   stream:
@@ -26,7 +26,8 @@ jobs:
         run: |
           ffmpeg -re -stream_loop -1 -i streadd.mp4 \
             -c:v libx264 -preset veryfast \
+            -g 96 -keyint_min 96 \
             -b:v 600k -maxrate 700k -bufsize 1000k \
             -pix_fmt yuv420p -profile:v baseline -level 3.1 \
             -c:a aac -ar 44100 -b:a 96k -ac 2 \
-            -f flv rtmp://a.rtmp.youtube.com/live2/eqxa-djk3-cc2d-gsat-453z
+            -f flv rtmp://a.rtmp.youtube.com/live2
