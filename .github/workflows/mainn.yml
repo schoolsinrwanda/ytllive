@@ -1,6 +1,32 @@
-ffmpeg -re -stream_loop -1 -i streadd.mp4 \
+name: Stream Trivia Video to YouTube
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */6 * * *'  # optional: auto restart every 6 hours
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt update
+          sudo apt install ffmpeg -y
+
+      - name: Stream video to YouTube
+        env:
+          YT_URL: ${{ secrets.YOUTUBE_URL }}
+        run: |
+          ffmpeg -re -stream_loop -1 -i strea.mp4 \
 -c:v libx264 -preset veryfast -g 120 -keyint_min 120 \
--b:v 100k -maxrate 1500k -bufsize 2000k \
+-b:v 2500k -maxrate 1500k -bufsize 3000k \
 -pix_fmt yuv420p -profile:v high -level 4.0 \
 -c:a aac -ar 44100 -b:a 128k -ac 2 \
 -f flv rtmp://a.rtmp.youtube.com/live2/eqxa-djk3-cc2d-gsat-453z
