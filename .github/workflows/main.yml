@@ -24,10 +24,10 @@ jobs:
         env:
           YT_URL: ${{ secrets.YOUTUBE_URL }}
         run: |
-          ffmpeg -re -stream_loop -1 -i stred.mp4 \
+          ffmpeg -re -stream_loop -1 -i kk.mp4 \
             -c:v libx264 -preset veryfast \
             -g 96 -keyint_min 96 \
             -b:v 600k -maxrate 700k -bufsize 1000k \
             -pix_fmt yuv420p -profile:v baseline -level 3.1 \
             -c:a aac -ar 44100 -b:a 96k -ac 2 \
-            -f flv rtmp://a.rtmp.youtube.com/live2/
+            -f flv rtmp://a.rtmp.youtube.com/live2/yg0x-khme-9gbs-407m-3cv6
