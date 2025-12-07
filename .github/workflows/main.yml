@@ -1,11 +1,11 @@
-name: Stream Music Video to YouTube
+name: live channel 1
 
 on:
   push:
     branches:
       - main
   schedule:
-    - cron: '0 */5 * * *'  # auto restart every 5 hours
+    - cron: '55 */5 * * *'  # auto restart every 5 hours
 
 jobs:
   stream:
@@ -20,14 +20,14 @@ jobs:
           sudo apt update
           sudo apt install ffmpeg -y
 
-      - name: Stream Cloudflare R2 video to YouTube
+      - name: channel 2 live
         env:
           YT_URL: ${{ secrets.YOUTUBE_URL }}
         run: |
-          ffmpeg -re -stream_loop -1 -i "https://pub-b19fa9b28a6640638cebf21d187c3e25.r2.dev/live/" \
+          ffmpeg -re -stream_loop -1 -i "https://pub-b19fa9b28a6640638cebf21d187c3e25.r2.dev/live/k3.mp4" \
             -c:v libx264 -preset veryfast \
             -g 96 -keyint_min 96 \
-            -b:v 2500k -maxrate 3000k -bufsize 5000k \
+            -b:v 1000k -maxrate 1000k -bufsize 1000k \
             -pix_fmt yuv420p -profile:v baseline -level 3.1 \
             -c:a aac -ar 44100 -b:a 96k -ac 2 \
-            -f flv rtmp://a.rtmp.youtube.com/live2/
+            -f flv rtmp://a.rtmp.youtube.com/live2/mqfp-05kv-ub86-ay2s-e7ua
